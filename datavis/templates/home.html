@@ -8,24 +8,34 @@
 
 
 
-<body id="form">
-
-        <div id="particles-js"></div>
-
+<body>
+    <div id="particles-js">
         <form class="query ui massive icon input" method="POST" action="/choose_dataset" id="input">
-          <input type="text" placeholder="Enter a question...">
-          <i class="search link icon" id="button" onclick="setTimeout(function(){}, 10000); document.getElementById('input').submit();"></i>
+            <input type="text" placeholder="Enter a question...">
+            <i class="search link icon" id="button" onclick="display_cards()"></i>
         </form>
+    </div>
+
+    <div id="cards">
+
+    </div>
 
 </body>
 
 <script src="{{ url_for('static', filename='home.js') }}"></script>
 
 <script>
-    $(document).ready(function(){
-        $('#button').click(function(){
-            $('#form').css("transform","translate(0,-25%)");
-     });
-    });
+    if ("{{first}}"=="True"){
+        $(document).ready(function(){
+            $('#button').click(function(){
+                $('#particles-js').css("transform","translate(0,-25%)");
+            });
+        });
+    }
+</script>
 
+<script>
+    function display_cards() {
+        // do asynch post req to modify cards
+    }
 </script>

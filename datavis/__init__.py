@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def query():
-    return render_template('home.html')
+    return render_template('home.html',first='True')
 
 @app.route('/choose_dataset')
 def choose_dataset():
