@@ -13,9 +13,11 @@
             <input id="input_query" type="text" placeholder="Enter a question...">
             <i class="search link icon" id="button" onclick="display_cards()"></i>
         </form>
+
+        <div id="cards"></div>
+
     </div>
 
-    <div id="cards"></div>
 
 </body>
 
@@ -40,7 +42,7 @@
             query: $('#input_query').val()
         }).done(function(response) {
 
-            title = response['title'];
+            title = response['titles'];
             descriptions = response['descriptions'];
 
             var section = document.getElementById('cards');

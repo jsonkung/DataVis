@@ -2,6 +2,7 @@ from datavis import app
 from datavis.inference import run_inference
 from datavis.utils import *
 from datavis.statistics import *
+import spacy
 
 from flask import (
     send_from_directory,
@@ -11,13 +12,29 @@ from flask import (
     jsonify
 )
 
+datasets = {
+    'data1': {
+        'keywords': set(['boston','people']),
+        'title': 'data1',
+        'description': 'description1'
+    },
+    'data2': {
+        'keywords': set(['new','york','people']),
+        'title': 'data2',
+        'description': 'description'
+    }
+
+}
+
 @app.route('/')
 def query():
     return render_template('home.html',first='True')
 
 @app.route('/choose_dataset', methods=['POST'])
 def choose_dataset():
-    return jsonify({'title':['title1','title2'],'descriptions':['desc1','desc2']})
+    query = request.form['query']
+    filenames,titles,descriptions = get_matching_datasets(query,datasets)
+    return jsonify({'titles':titles,'descriptions':descriptions,'filenames':filenames})
 
 @app.route('/visual',methods=['POST'])
 def visualize():
@@ -63,10 +80,6 @@ def examplesdata():
         }
     return jsonify(response_payload)
 
-
-@app.route("/")
-def hello():
-    return render_template('index.html')
 
 
 """[Load sample json data from new dataset]
@@ -165,3 +178,25 @@ def inference():
             "vegaspec": decoded_string
         }
     return jsonify(response_payload)
+
+
+def get_key_words(query):
+    key_words = []
+    nlp = spacy.load('en_core_web_sm')
+    doc = nlp(query)
+    for chunk in doc.noun_chunks:
+        key_words.append(chunk.root.text)
+    return key_words
+
+def get_matching_datasets(query,datasets):
+    filenames = []
+    titles = []
+    descriptions = []
+    keywords = get_key_words(query)
+    for keyword in keywords:
+        for dataset in datasets:
+            if keyword in datasets[dataset]['keywords']:
+                filenames.append(dataset)
+                titles.append(datasets[dataset]['title'])
+                descriptions.append(datasets[dataset]['description'])
+    return (filenames,titles,descriptions)
