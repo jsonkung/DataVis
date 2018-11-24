@@ -5,13 +5,14 @@ from collect_data import collect_data
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def query():
     return render_template('home.html',first='True')
 
 @app.route('/choose_dataset', methods=['POST'])
 def choose_dataset():
-    return jsonify({'title':'test_data_output','data':collect_data(request.form['text'], request.form['query'])})
+    return jsonify({'title':['title1','title2'],'descriptions':['desc1','desc2']})
 
 @app.route('/visual',methods=['POST'])
 def visualize():

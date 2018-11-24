@@ -8,6 +8,8 @@
 
 
 
+
+
 <body>
     <div id="particles-js">
         <form class="query ui massive icon input" id="input">
@@ -16,11 +18,20 @@
         </form>
     </div>
 
-    <div id="cards">
-
-    </div>
+    <div id="cards"></div>
 
 </body>
+
+
+
+
+
+
+
+
+
+
+
 
 <script src="{{ url_for('static', filename='home.js') }}"></script>
 
@@ -28,7 +39,7 @@
     if ("{{first}}"=="True"){
         $(document).ready(function(){
             $('#button').click(function(){
-                $('#particles-js').css("transform","translate(0,-25%)");
+                $('#input').css("transform","translate(0,-500%)");
             });
         });
     }
@@ -39,10 +50,59 @@
         // do asynch post req to modify cards
         $('#cards').html('<img src=  "{{ url_for('static', filename='loading.gif') }}">');
         $.post("/choose_dataset", {
-            text: "yes",
             query: $('#input_query').val()
         }).done(function(response) {
-            $('#cards').text(response['data'])
+
+            title = response['title'];
+            descriptions = response['descriptions'];
+
+            var section = document.getElementById('cards');
+            section.innerHTML = '';
+            for(let i=0; i<title.length; i++){
+                let card = document.createElement('div');
+                card.classList.add('ui');
+                card.classList.add('card');
+
+                let content = document.createElement('div');
+                content.classList.add('content');
+                let header = document.createElement('a');
+                header.classList.add('header');
+                header.text = title[i];
+                let description = document.createElement('div');
+                description.classList.add('description');
+                description.append(descriptions[i]);
+                content.appendChild(header);
+                content.appendChild(description);
+
+                let extraContent = document.createElement('div');
+                extraContent.classList.add('extra');
+                extraContent.classList.add('content');
+                extraContent.insertAdjacentHTML('beforeend','<a><i class="chart line icon"></i> Plot Dataset</a>')
+
+                card.appendChild(content);
+                card.appendChild(extraContent);
+                card.style.opacity = 0
+
+                section.appendChild(card);
+
+
+                setTimeout(function() {
+                    var steps = 0;
+                    var timer = setInterval(function() {
+                        steps++;
+                        card.style.opacity = 0.05 * steps;
+                        if(steps >= 20) {
+                            clearInterval(timer);
+                            timer = undefined;
+                        }
+                    }, 50);
+                }, 250);
+
+
+
+
+            }
+
         }).fail(function() {
             $('#cards').text("complete garbage")
         });
