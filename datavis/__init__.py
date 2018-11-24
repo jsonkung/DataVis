@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import (request,render_template,jsonify)
 from utils import *
+from collect_data import collect_data
 
 app = Flask(__name__)
 
@@ -8,9 +9,9 @@ app = Flask(__name__)
 def query():
     return render_template('home.html',first='True')
 
-@app.route('/choose_dataset')
+@app.route('/choose_dataset', methods=['POST'])
 def choose_dataset():
-    return jsonify({'title':[],'description':[]})
+    return jsonify({'title':'test_data_output','data':collect_data(request.form['text'], request.form['query'])})
 
 @app.route('/visual',methods=['POST'])
 def visualize():

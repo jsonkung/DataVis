@@ -10,8 +10,8 @@
 
 <body>
     <div id="particles-js">
-        <form class="query ui massive icon input" method="POST" action="/choose_dataset" id="input">
-            <input type="text" placeholder="Enter a question...">
+        <form class="query ui massive icon input" id="input">
+            <input id="input_query" type="text" placeholder="Enter a question...">
             <i class="search link icon" id="button" onclick="display_cards()"></i>
         </form>
     </div>
@@ -37,6 +37,14 @@
 <script>
     function display_cards() {
         // do asynch post req to modify cards
-        
+        $('#cards').html('<img src=  "{{ url_for('static', filename='loading.gif') }}">');
+        $.post("/choose_dataset", {
+            text: "yes",
+            query: $('#input_query').val()
+        }).done(function(response) {
+            $('#cards').text(response['data'])
+        }).fail(function() {
+            $('#cards').text("complete garbage")
+        });
     }
 </script>
