@@ -10,7 +10,7 @@ def query():
 
 @app.route('/choose_dataset')
 def choose_dataset():
-    return render_template('home.html')
+    return jsonify({'title':[],'description':[]})
 
 @app.route('/visual',methods=['POST'])
 def visualize():
