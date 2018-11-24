@@ -6,7 +6,20 @@ app = Flask(__name__)
 
 @app.route('/')
 def query():
-    pass
+    return render_template('home.html')
+
+@app.route('/choose_dataset')
+def choose_dataset():
+    return render_template('home.html')
+
+@app.route('/visual',methods=['POST'])
+def visualize():
+    if request.method == 'GET':
+        raise ValueError('Bad request')
+    datasets = request.form['datasets'] # Sent in as list of filenames
+    graph_type = request.form['type']
+    # Based on graph_type, call function to parse data
+
 
 @app.route('/test_chart')
 def test_chart():

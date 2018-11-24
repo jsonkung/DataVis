@@ -5,9 +5,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="{{ url_for('static', filename='graphs.js') }}"></script>
 
+
 <canvas id="chart" width="600" height="400"></canvas>
 
-<!-- <script src="{{ url_for('static', filename='bar.js') }}"></script> -->
 {% if visual == 'bar' %}
     <script>
         let labels = [{% for item in labels %} "{{item}}", {% endfor %}];
