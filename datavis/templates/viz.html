@@ -1,0 +1,34 @@
+<!-- Container for Seq2Seq Sampler -->
+<div>
+
+  <div class="graphdescription"> Generate Visualizations </div>
+  <div class="inoutheader text">
+    Displaying top-5 results from beam search
+  </div>
+
+  <div class="seqs">
+    <button class="bx--btn bx--btn--primary loadbutton loadsampledataset" type="button">
+      Generate
+    </button>
+  </div>
+  <br>
+  <div class="inoutheader text">
+    Displaying data in JSON format
+  </div>
+  <textarea id="sourcedata" class="bx--text-area inputdata sourcedata" rows="4" cols="50" placeholder="Input JSON array."></textarea>
+
+  <div id="vis" class="vizbox"></div>
+
+  <div class="bx--row ">
+    <div class="bx--col-xl-12">
+      <div class="seqs">
+
+      </div>
+      <div class="inoutheader lighttext generatedvizheader beamthing"> </div>
+      <div class="beamdesctext resultupdate beamthing"> </div>
+      <div class="beamboxdiv"></div>
+    </div>
+  </div>
+
+</div>
+<!-- end of Container for RNN Sample -->

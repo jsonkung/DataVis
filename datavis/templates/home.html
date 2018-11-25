@@ -8,6 +8,8 @@
 
 
 <body>
+  <div class="container">
+    <img src="static/assets/datavislogo.png" class="logo" id="logo">
     <div id="particles-js">
         <form class="query ui massive icon input" id="input">
             <input id="input_query" type="text" placeholder="Enter a question...">
@@ -15,10 +17,8 @@
         </form>
 
         <div id="cards"></div>
-
     </div>
-
-
+  </div>
 </body>
 
 
@@ -29,9 +29,11 @@
        if(e.keyCode == 13){
            display_cards();
            $('#input').css("transform","translate(0,-400%)");
+           $('#logo').fadeOut();
            return false;
        }
     });
+
 
 </script>
 
@@ -39,7 +41,9 @@
     $(document).ready(function(){
         $('#button').click(function(){
             $('#input').css("transform","translate(0,-400%)");
+            $('#logo').fadeOut();
         });
+
     });
 </script>
 
@@ -52,31 +56,31 @@
             query: $('#input_query').val()
         }).done(function(response) {
 
-            title = response['titles'];
+            titles = response['titles'];
             descriptions = response['descriptions'];
+            filenames = response['filenames'];
 
             var section = document.getElementById('cards');
             section.innerHTML = '';
-            for(let i=0; i<title.length; i++){
+            for(let i=0; i<titles.length; i++){
                 let card = document.createElement('div');
                 card.classList.add('ui');
                 card.classList.add('card');
 
                 let content = document.createElement('div');
                 content.classList.add('content');
-                let header = document.createElement('a');
-                header.classList.add('header');
-                header.text = title[i];
+                content.insertAdjacentHTML('beforeend','<form id="form'+i+'"name="select" method="POST" action="/dashboard"><a href="javascript:{}" onclick="document.getElementById(\'form'+i+'\').submit(); return false;" class="ui header"><input type="hidden" name="filename" value="'+filenames[i]+'"/>'+titles[i]+'</a></form>')
+
                 let description = document.createElement('div');
                 description.classList.add('description');
                 description.append(descriptions[i]);
-                content.appendChild(header);
                 content.appendChild(description);
 
                 let extraContent = document.createElement('div');
                 extraContent.classList.add('extra');
                 extraContent.classList.add('content');
-                extraContent.insertAdjacentHTML('beforeend','<a><i class="chart line icon"></i> Plot Dataset</a>')
+                extraContent.insertAdjacentHTML('beforeend','<form id="form'+i+'"name="select" method="POST" action="/dashboard"><a href="javascript:{}" onclick="document.getElementById(\'form'+i+'\').submit(); return false;"><input type="hidden" name="filename" value="'+filenames[i]+'"/><i class="chart line icon"></i> Plot Dataset</a></form>')
+
 
                 card.appendChild(content);
                 card.appendChild(extraContent);
