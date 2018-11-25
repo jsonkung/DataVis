@@ -33,22 +33,22 @@ from flask import (
 )
 
 datasets = {
-    'Family Data': {
+    'familieschild.json': {
         'keywords': set(['boston','people', 'children', 'family', 'mothers', 'map']),
         'title': 'Families with Children',
         'description': 'Maps location of different types of families with children'
     },
-    'Population by Age': {
+    'genderage.json': {
         'keywords': set(['boston','people', 'map', 'age']),
         'title': 'Population by Age',
         'description': 'Market segments sorted by location'
     },
-    'Population by Race': {
+    'Racialdata.json': {
         'keywords': set(['boston','people', 'map', 'race']),
         'title': 'Population by Race',
         'description': 'Racial groups sorted by location'
     },
-    'Income distribution': {
+    'income.json': {
         'keywords': set(['boston','people', 'map', 'income', 'where', 'rich', 'poor']),
         'title': 'Income distribution',
         'description': 'Distribution of income by location'
@@ -58,19 +58,11 @@ datasets = {
         'title': 'Higher Education Distribution',
         'description': 'Higher education campus locations'
     },
-    'Boston Spending Habits': {
+    'Boston_spending_percent.csv': {
         'keywords': set(['boston','people', 'map', 'spending']),
         'title': 'Boston Spending Habits',
         'description': 'Spending trends in Boston vs. the US as a whole'
     },
-    'MBTA Data': {
-        'keywords': set(['boston','people', 'time', 'when', 'chart']),
-        'title': 'MBTA Data',
-        'description': 'MBTA Ridership by time of day'
-    },
-
-
-
 
 }
 
