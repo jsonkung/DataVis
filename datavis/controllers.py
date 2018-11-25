@@ -39,37 +39,37 @@ import sys
 
 datasets = {
     'familieschild.json': {
-        'keywords': set(['boston','people', 'children', 'family', 'mothers', 'map']),
+        'keywords': set(['boston','people', 'children', 'family', 'mothers', 'fathers', 'map']),
         'title': 'Families with Children',
         'description': 'Maps location of different types of families with children'
     },
     'genderage.json': {
-        'keywords': set(['boston','people', 'map', 'age']),
+        'keywords': set(['boston','people', 'map', 'age', 'male', 'female', 'men', 'women', 'gender']),
         'title': 'Population by Age',
         'description': 'Market segments sorted by location'
     },
     'Racialdata.json': {
-        'keywords': set(['boston','people', 'map', 'race']),
+        'keywords': set(['boston','people', 'map', 'race', 'white', 'black', 'hispanic', 'asian', 'indian', 'minority']),
         'title': 'Population by Race',
         'description': 'Racial groups sorted by location'
     },
     'income.json': {
-        'keywords': set(['boston','people', 'map', 'income', 'where', 'rich', 'poor']),
+        'keywords': set(['boston','people', 'map', 'income', 'where', 'rich', 'poor', 'tax', 'revenue']),
         'title': 'Income distribution',
         'description': 'Distribution of income by location'
     },
     'Boston_spending_percent.csv': {
-        'keywords': set(['boston','people', 'map', 'spending']),
+        'keywords': set(['boston','people', 'map', 'spending', 'revenue']),
         'title': 'Boston Spending Habits',
         'description': 'Spending trends in Boston vs. the US as a whole'
     },
     'wickedwifi.geojson': {
-        'keywords': set(['boston','tech', 'Wifi', 'where']),
+        'keywords': set(['boston','tech', 'wifi', 'where', 'internet', 'networks']),
         'title': 'Wicked Wifi Networks',
         'description': 'Free wifi networks around Boston'
     },
     'colleges.geojson': {
-        'keywords': set(['boston','people', 'map', 'students', 'college']),
+        'keywords': set(['boston','people', 'map', 'students', 'college', 'university']),
         'title': 'Higher Education Distribution',
         'description': 'Higher education campus locations'
     },
@@ -353,7 +353,7 @@ def get_key_words(query):
         key_words.append(chunk.root.text)
     return key_words
 
-def get_matching_datasets(query,datasets):
+def get_matching_datasets(query, datasets):
     matches = {}
     current_match = 0
     filenames = []
