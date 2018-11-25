@@ -41,13 +41,45 @@ a:focus {
 }
 
 .query {
-    height:5%;
+    height:8%;
     width:30%;
-    top: 20%;
+    top: 45%;
     left:35%;
 }
 
-#form
+#input
 {
   transition: transform 0.6s ease;
 }
+
+#cards {
+	position: absolute;
+	/*original style:
+    top: 50%;
+    */
+
+    /* new style */
+	right: 50%;
+	bottom: -20%;
+	height: 62%;
+	/* new style */
+
+	transform: translate(50%,-50%);
+	color: $text;
+	max-width: 90%;
+	padding: 2em 3em;
+	font-family: 'Open Sans', sans-serif;
+}
+
+
+
+
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
