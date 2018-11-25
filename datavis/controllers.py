@@ -319,7 +319,8 @@ def data_dashboard():
         "Racialdata.json":    "race_demographics"
     }
     file_to_chartjs = {
-        "employment.csv":     "employment.csv"
+        "employment.csv":     "employment.csv",
+        "bos_percents.csv":   "bos_percents.csv"
     }
     joined_census = [
         "joined_census_fam_nochil.json",
@@ -342,8 +343,7 @@ def data_dashboard():
 # @app.route("/datavis/<string:filename>", methods=['GET'])
 @app.route("/datavis", methods=['POST'])
 def data2vis():
-    filename = 'joined_census.json'
-    # filename = request.form['filename']
+    filename = request.form['filename']
     directory = 'datavis/data/'
     global data
     with open(directory + filename) as f:

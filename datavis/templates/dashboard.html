@@ -16,20 +16,12 @@
 <body>
 
   <div class="ui top attached tabular menu">
-    <a class="item active" data-tab="charts">Charts</a>
-    <a class="item" data-tab="maps">Maps</a>
+    <a class="item active" data-tab="maps">Maps</a>
     <a class="item" data-tab="trends">Trends</a>
+    <a class="item" data-tab="charts">Charts</a>
   </div>
 
-  <div class="ui bottom attached active tab segment" data-tab="charts">
-    <iframe name="chartjs" src="{{ url_for('test_chart') }}" frameborder="0" id="mapframe"></iframe>
-  </div>
-
-  <form action="/chart" method="post" target="chartjs" id="post2chartjs">
-    <input type="hidden" name="filename" value="{{ chartjsfile }}" />
-  </form>
-
-  <div class="ui bottom attached tab segment" data-tab="maps">
+  <div class="ui bottom attached active tab segment" data-tab="maps">
     <iframe src="{{ url_for('visualize', dataset=mapfile) }}" frameborder="0" id="mapframe"></iframe>
   </div>
 
@@ -39,6 +31,14 @@
 
   <form action="/datavis" method="post" target="data2viz" id="post2data2viz">
       <input type="hidden" name="filename" value="{{ d2visfile }}" />
+  </form>
+
+  <div class="ui bottom attached tab segment" data-tab="charts">
+    <iframe name="chartjs" src="{{ url_for('test_chart') }}" frameborder="0" id="mapframe"></iframe>
+  </div>
+
+  <form action="/chart" method="post" target="chartjs" id="post2chartjs">
+    <input type="hidden" name="filename" value="{{ chartjsfile }}" />
   </form>
 
 </body>
