@@ -58,17 +58,22 @@ datasets = {
         'title': 'Income distribution',
         'description': 'Distribution of income by location'
     },
-    'Higher Education Distribution': {
-        'keywords': set(['boston','people', 'map', 'students', 'college']),
-        'title': 'Higher Education Distribution',
-        'description': 'Higher education campus locations'
-    },
+
     'Boston_spending_percent.csv': {
         'keywords': set(['boston','people', 'map', 'spending']),
         'title': 'Boston Spending Habits',
         'description': 'Spending trends in Boston vs. the US as a whole'
     },
-
+    'wickedwifi.geojson': {
+        'keywords': set(['boston','tech', 'Wifi', 'where']),
+        'title': 'Wicked Wifi Networks',
+        'description': 'Free wifi networks around Boston'
+    },
+    'colleges.geojson': {
+        'keywords': set(['boston','people', 'map', 'students', 'college']),
+        'title': 'Higher Education Distribution',
+        'description': 'Higher education campus locations'
+    },
 }
 
 # Data2Viz Constants
