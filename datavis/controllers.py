@@ -28,7 +28,7 @@ datasets = {
 
 @app.route('/')
 def query():
-    return render_template('home.html',first='True')
+    return render_template('home.html')
 
 @app.route('/choose_dataset', methods=['POST'])
 def choose_dataset():

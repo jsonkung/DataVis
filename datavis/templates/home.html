@@ -1,6 +1,6 @@
 <head>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.css"></link>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" type="text/css" href="static/css/home.css">
 </head>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -22,22 +22,36 @@
 </body>
 
 
-<script src="{{ url_for('static', filename='home.js') }}"></script>
+<script src="static/js/home.js"></script>
 
 <script>
-    if ("{{first}}"=="True"){
-        $(document).ready(function(){
-            $('#button').click(function(){
-                $('#input').css("transform","translate(0,-500%)");
-            });
+    var input = document.getElementById("input_query");
+    input.addEventListener("keyup",function(event){
+        event.preventDefault();
+        if (event.keyCode == 13){
+            document.getElementById("button").click();
+            return false;
+        } else {
+            console.log('rip')
+            return false;
+        }
+    })
+
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('#button').click(function(){
+            $('#input').css("transform","translate(0,-500%)");
         });
-    }
+        return false;
+    });
 </script>
 
 <script>
     function display_cards() {
+        console.log('nice')
         // do asynch post req to modify cards
-        $('#cards').html('<img src=  "{{ url_for('static', filename='loading.gif') }}">');
         $.post("/choose_dataset", {
             query: $('#input_query').val()
         }).done(function(response) {
@@ -88,9 +102,10 @@
                 }, 250);
 
             }
-
+            return false;
         }).fail(function() {
             $('#cards').text("complete garbage")
         });
+
     }
 </script>
