@@ -37,6 +37,8 @@ import time
 import geomapy
 import sys
 
+import random
+
 datasets = {
     'familieschild.json': {
         'keywords': set(['boston','people', 'children', 'family', 'mothers', 'fathers', 'map']),
@@ -284,7 +286,16 @@ def data_dashboard():
     file_to_chartjs = {
         "employment.csv":     "employment.csv"
     }
-    file_to_d2v = dict()
+    joined_census = [
+        "joined_census_fam_nochil.json",
+        "joined_census_fam_race.json",
+        "joined_census_gender_fam.json",
+        "joined_census_gender_nochil.json",
+        "joined_census_gender_race.json",
+        "joined_census_race_nochil.json",
+        "joined_census.json"
+    ]
+    file_to_d2v = filename if filename in joined_census else random.choice(joined_census)
     d2vis_focus = file_to_d2v.get(filename, "income.json")
     map_focus = file_to_map.get(filename, "families_children")
     chartjs_focus = file_to_chartjs.get(filename, "employment.csv")
