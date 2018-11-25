@@ -34,9 +34,12 @@
   </div>
 
   <div class="ui bottom attached tab segment" data-tab="trends">
-    <p>three</p>
-    <p></p>
+    <iframe name="data2viz" src="{{ url_for('data2vis') }}" id="trendframe"></iframe>
   </div>
+
+  <form action="/datavis" method="post" target="data2viz" id="post2data2viz">
+      <input type="hidden" name="filename" value="{{ filename }}" />
+  </form>
 
 </body>
 

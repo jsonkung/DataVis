@@ -39,34 +39,44 @@ import sys
 
 datasets = {
     'familieschild.json': {
-        'keywords': set(['boston','people', 'children', 'family', 'mothers', 'map']),
+        'keywords': set(['boston','people', 'children', 'family', 'mothers', 'fathers', 'map']),
         'title': 'Families with Children',
         'description': 'Maps location of different types of families with children'
     },
     'genderage.json': {
-        'keywords': set(['boston','people', 'map', 'age']),
+        'keywords': set(['boston','people', 'map', 'age', 'male', 'female', 'men', 'women', 'gender']),
         'title': 'Population by Age',
         'description': 'Market segments sorted by location'
     },
     'Racialdata.json': {
-        'keywords': set(['boston','people', 'map', 'race']),
+        'keywords': set(['boston','people', 'map', 'race', 'white', 'black', 'hispanic', 'asian', 'indian', 'minority']),
         'title': 'Population by Race',
         'description': 'Racial groups sorted by location'
     },
     'income.json': {
-        'keywords': set(['boston','people', 'map', 'income', 'where', 'rich', 'poor']),
+        'keywords': set(['boston','people', 'map', 'income', 'where', 'rich', 'poor', 'tax', 'revenue']),
         'title': 'Income distribution',
         'description': 'Distribution of income by location'
     },
-    'Higher Education Distribution': {
-        'keywords': set(['boston','people', 'map', 'students', 'college']),
+    'Boston_spending_percent.csv': {
+        'keywords': set(['boston','people', 'map', 'spending', 'revenue']),
+        'title': 'Boston Spending Habits',
+        'description': 'Spending trends in Boston vs. the US as a whole'
+    },
+    'wickedwifi.geojson': {
+        'keywords': set(['boston','tech', 'wifi', 'where', 'internet', 'networks']),
+        'title': 'Wicked Wifi Networks',
+        'description': 'Free wifi networks around Boston'
+    },
+    'colleges.geojson': {
+        'keywords': set(['boston','people', 'map', 'students', 'college', 'university']),
         'title': 'Higher Education Distribution',
         'description': 'Higher education campus locations'
     },
-    'Boston_spending_percent.csv': {
-        'keywords': set(['boston','people', 'map', 'spending']),
-        'title': 'Boston Spending Habits',
-        'description': 'Spending trends in Boston vs. the US as a whole'
+        'employment.csv': {
+        'keywords': set(['boston','people', 'jobs', 'income']),
+        'title': 'Employment by profession',
+        'description': 'Number of people employed by profession'
     },
 }
 
@@ -261,7 +271,10 @@ def test_chart():
 def data_dashboard():
     filename = request.form['filename']
     file_to_map = {
-        "familieschild.json": "families_children"
+        "familieschild.json": "families_children",
+        "income.json":        "income",
+        "genderage.json":     "gender_age",
+        "Racialdata.json":    "race_demographics"
     }
     dataset_focus = file_to_map.get(filename, "families_children")
     print(filename, dataset_focus)
@@ -275,15 +288,15 @@ def data2vis():
     filename = request.form['filename']
     directory = 'datavis/data/'
     global data
-    with open(directory + filename + '.json') as f:
+    with open(directory + filename) as f:
         data = json.load(f)
     print(data)
     return render_template('index.html')
 
 @app.route("/testdata")
 def testdata():
-    return jsonify(data)
-
+    # return jsonify(data)
+    return jsonify(data_utils.load_test_dataset())
 
 @app.route("/inference", methods=['POST'])
 def inference():
@@ -348,7 +361,7 @@ def get_key_words(query):
         key_words.append(chunk.root.text)
     return key_words
 
-def get_matching_datasets(query,datasets):
+def get_matching_datasets(query, datasets):
     matches = {}
     current_match = 0
     filenames = []
