@@ -18,17 +18,11 @@ def collect_data(checker, query):
 
 def open_file(filename,header='infer'):
     try:
-        path = './data/{}'.format(filename)
+        path = 'datavis/data/{}'.format(filename)
         return pd.read_csv(path,header=header)
     except FileNotFoundError:
-        raise NameError('file not found in data folder')
+        raise NameError('file `{}` not found in data folder'.format(filename))
 
-def get_data(filename,header='infer'):
-    data = open_file(filename,header)
-    out = {}
-    if header is not None:
-        out['headers'] = list(data)
-    # out['data'] =
 
 def get_single_bar_data(filename,method=stat.mean,header='infer'):
     '''
@@ -61,7 +55,7 @@ def get_single_bar_data(filename,method=stat.mean,header='infer'):
     for idx,x,y in data.itertuples():
         if x not in out:
             out[x] = []
-        out[x].append(y)
+        out[x].append(float(y.replace(',','')))
 
     out['labels'] = []
     out['data'] = []
