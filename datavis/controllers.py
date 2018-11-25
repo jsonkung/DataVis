@@ -52,6 +52,16 @@ def test_chart():
     vals = data['data']
     return render_template('test.html',axes=axes,labels=labels,vals=vals,visual='bar')
 
+
+@app.route('/dashboard')
+def data_dashboard():
+    # filename = request.form['filename']
+
+
+
+    # return render_template('dashboard.html', filename=filename)
+    return render_template('dashboard.html')
+
 @app.route("/examplesdata")
 def examplesdata():
     source_data = data_utils.load_test_dataset()
