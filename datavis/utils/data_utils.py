@@ -18,7 +18,7 @@ examples_directory = "examples"
 vl_data_filename = "examples/vldata.json"
 test_dataset_directory = "testdata"
 
-test_data_list = "testdata/tdatalsit.json"
+test_data_list = "datavis/model/testdata/tdatalsit.json"
 
 train_data_output_directory = "sourcedata"
 max_file_size = 1219853
@@ -453,8 +453,8 @@ def load_test_dataset():
             json.dump(file_list, outfile)
 
     all_json_files = json.load(open(test_data_list))
-    # print("Selecting a dataset at random from ", len(all_json_files))
-    data = json.load(open(all_json_files[randint(0, len(all_json_files) - 1)]))
+    print("Selecting a dataset at random from ", len(all_json_files))
+    data = json.load(open('datavis/model/' + all_json_files[randint(0, len(all_json_files) - 1)]))
     return (data)
 
 
