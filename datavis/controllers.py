@@ -246,13 +246,16 @@ def visualize(dataset):
     )
 
 
-@app.route('/test_chart')
+@app.route('/chart',methods=["POST"])
 def test_chart():
-    data = get_single_bar_data('test_data.csv')
-    axes = data['axes']
+    filename = request.form['filename']
+    if filename == 'spending.json':
+        return render_template('charts.html',visual='double_bar')
+    data = get_single_bar_data(filename)
+    y_axis = data['axes'][1]
     labels = data['labels']
     vals = data['data']
-    return render_template('test.html',axes=axes,labels=labels,vals=vals,visual='bar')
+    return render_template('charts.html',y_axis=y_axis,labels=labels,vals=vals,visual='single_bar')
 
 
 @app.route('/dashboard', methods=["POST"])
