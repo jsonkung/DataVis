@@ -263,7 +263,10 @@ def test_chart():
 def data_dashboard():
     filename = request.form['filename']
     file_to_map = {
-        "familieschild.json": "families_children"
+        "familieschild.json": "families_children",
+        "income.json":        "income",
+        "genderage.json":     "gender_age",
+        "Racialdata.json":    "race_demographics"
     }
     dataset_focus = file_to_map[filename]
     print(filename, dataset_focus)
