@@ -83,6 +83,41 @@ datasets = {
         'title': 'Percent spent on items',
         'description': 'Amount spent by Bostonians on different services'
     },
+    'joined_census_fam_nochil.json': {
+        'keywords': set(['boston','people', 'insights', 'family', 'children']),
+        'title': 'Insights:',
+        'description': 'Discover connections between'
+    },
+    'joined_census_fam_race.json': {
+        'keywords': set(['boston','people', 'insights', 'family', 'race', 'minority']),
+        'title': 'Insights:',
+        'description': 'Discover connections between'
+    },
+    'joined_census_gender_fam.json': {
+        'keywords': set(['boston','people', 'insights', 'gender', 'family', 'children']),
+        'title': 'Insights:',
+        'description': 'Discover connections between'
+    },
+    'joined_census_gender_nochil.json': {
+        'keywords': set(['boston','people', 'insights', 'gender', 'family', 'children']),
+        'title': 'Insights:',
+        'description': 'Discover connections between'
+    },
+    'joined_census_gender_race.json': {
+        'keywords': set(['boston','people', 'insights', 'race', 'gender']),
+        'title': 'Insights:',
+        'description': 'Discover connections between'
+    },
+    'joined_census_race_nochil.json': {
+        'keywords': set(['boston','people', 'insights', 'race', 'family']),
+        'title': 'Insights:',
+        'description': 'Discover connections between'
+    },
+    'joined_census.json': {
+        'keywords': set(['boston','people', 'insights', 'race', 'gender', 'minority']),
+        'title': 'Insights:',
+        'description': 'Discover connections between'
+    },
 }
 
 # Data2Viz Constants
