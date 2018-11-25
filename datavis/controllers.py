@@ -73,10 +73,15 @@ datasets = {
         'title': 'Higher Education Distribution',
         'description': 'Higher education campus locations'
     },
-        'employment.csv': {
+    'employment.csv': {
         'keywords': set(['boston','people', 'jobs', 'income']),
         'title': 'Employment by profession',
         'description': 'Number of people employed by profession'
+    },
+    'bos_percents.csv': {
+        'keywords': set(['boston','people', 'spending', 'income']),
+        'title': 'Percent spent on items',
+        'description': 'Amount spent by Bostonians on different services'
     },
 }
 
