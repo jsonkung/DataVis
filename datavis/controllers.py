@@ -276,11 +276,18 @@ def data_dashboard():
         "genderage.json":     "gender_age",
         "Racialdata.json":    "race_demographics"
     }
-    dataset_focus = file_to_map.get(filename, "families_children")
-    print(filename, dataset_focus)
+    file_to_chartjs = {
+        "employment.csv":     "employment.csv"
+    }
+    file_to_d2v = dict()
+    d2vis_focus = file_to_d2v.get(filename, "income.json")
+    map_focus = file_to_map.get(filename, "families_children")
+    chartjs_focus = file_to_chartjs.get(filename, "employment.csv")
+    print(filename, d2vis_focus, map_focus, chartjs_focus)
     return render_template("dashboard.html",
-                           filename=filename,
-                           dataset=dataset_focus)
+                           chartjsfile=chartjs_focus,
+                           d2visfile=d2vis_focus,
+                           mapfile=map_focus)
 
 # @app.route("/datavis/<string:filename>", methods=['GET'])
 @app.route("/datavis", methods=['POST'])
