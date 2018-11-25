@@ -58,6 +58,16 @@ datasets = {
         'title': 'Higher Education Distribution',
         'description': 'Higher education campus locations'
     },
+    'Boston Spending Habits': {
+        'keywords': set(['boston','people', 'map', 'spending']),
+        'title': 'Boston Spending Habits',
+        'description': 'Spending trends in Boston vs. the US as a whole'
+    },
+    'MBTA Data': {
+        'keywords': set(['boston','people', 'time', 'when', 'chart']),
+        'title': 'MBTA Data',
+        'description': 'MBTA Ridership by time of day'
+    },
 
 
 
