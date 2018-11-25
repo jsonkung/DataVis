@@ -330,8 +330,7 @@ def data_dashboard():
         "joined_census_race_nochil.json",
         "joined_census.json"
     ]
-    file_to_d2v = filename if filename in joined_census else random.choice(joined_census)
-    d2vis_focus = file_to_d2v.get(filename, "income.json")
+    d2vis_focus = filename if filename in joined_census else random.choice(joined_census)
     map_focus = file_to_map.get(filename, "families_children")
     chartjs_focus = file_to_chartjs.get(filename, "employment.csv")
     print(filename, d2vis_focus, map_focus, chartjs_focus)
