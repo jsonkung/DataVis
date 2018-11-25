@@ -54,9 +54,6 @@ datasets = {
         'description': 'Income distribution'
     },
 
-
-
-
 }
 
 # Data2Viz Constants
@@ -202,14 +199,18 @@ def test_chart():
     vals = data['data']
     return render_template('test.html',axes=axes,labels=labels,vals=vals,visual='bar')
 
-@app.route("/data2vis")
-def data2vis():
+@app.route("/datavis/<string:filename>", methods=['POST'])
+def data2vis(filename):
+    directory = 'datavis/data'
+    global data
+    with open(directory + filename) as f:
+        data = json.load(f)
+    print(data)
     return render_template('index.html')
-
 
 @app.route("/testdata")
 def testdata():
-    return jsonify(data_utils.load_test_dataset())
+    return jsonify(data)
 
 
 @app.route("/inference", methods=['POST'])
