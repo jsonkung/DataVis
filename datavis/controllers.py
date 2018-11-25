@@ -68,7 +68,6 @@ datasets = {
         'title': 'Boston Spending Habits',
         'description': 'Spending trends in Boston vs. the US as a whole'
     },
-
 }
 
 # Data2Viz Constants
@@ -280,8 +279,8 @@ def data2vis():
 
 @app.route("/testdata")
 def testdata():
-    return jsonify(data)
-
+    # return jsonify(data)
+    return jsonify(data_utils.load_test_dataset())
 
 @app.route("/inference", methods=['POST'])
 def inference():
