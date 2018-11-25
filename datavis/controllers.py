@@ -210,7 +210,7 @@ def get_matching_datasets(query,datasets):
     keywords = get_key_words(query)
     for keyword in keywords:
         for dataset in datasets:
-            if keyword in datasets[dataset]['keywords']:
+            if keyword.lower() in datasets[dataset]['keywords']:
                 matches[dataset] = matches.get(dataset,0)+1
                 if matches[dataset] > current_match:
                     filenames = [dataset]
