@@ -1,8 +1,28 @@
-from datavis import app
-from datavis.inference import run_inference
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
+import json
+import spacy
+
+from datavis import *
 from datavis.utils import *
 from datavis.statistics import *
-import spacy
+
+import json
+import yaml
+import argparse
+from pydoc import locate
+
+import tensorflow as tf
+
+from datavis.utils import data_utils
+from seq2seq import tasks, models
+from seq2seq.configurable import _maybe_load_yaml, _deep_merge_dict
+from seq2seq.data import input_pipeline
+from seq2seq.inference import create_inference_graph
+from seq2seq.training import utils as training_utils
 
 from flask import (
     send_from_directory,
@@ -25,6 +45,123 @@ datasets = {
     }
 
 }
+
+# Data2Viz Constants
+# ------------------------------------------------------------------------------
+
+model_directory = 'datavis/model/vizmodel'
+
+destination_file = "test.txt"
+
+input_pipeline_dict = {
+    'class': 'ParallelTextInputPipeline',
+    'params': {
+        'source_delimiter': '',
+        'target_delimiter': '',
+        'source_files': [destination_file]
+     }
+}
+
+input_task_list = [{'class': 'DecodeText', 'params': {'delimiter': ''}}]
+
+dump_attention_task = {
+    'class': 'DumpAttention',
+    'params': {
+        'dump_plots': False,
+        'output_dir': "attention_plot"
+    }
+}
+
+
+model_params = "{'inference.beam_search.beam_width': 5}"
+batch_size = 32
+loaded_checkpoint_path = None
+
+hooks = []
+session_creator = None
+decoded_string = ""
+
+# Data2Viz helper functions
+# ------------------------------------------------------------------------------
+
+fl_tasks = _maybe_load_yaml(str(input_task_list))
+fl_input_pipeline = _maybe_load_yaml(str(input_pipeline_dict))
+
+# Load saved training options
+train_options = training_utils.TrainOptions.load(model_directory)
+
+# Create the model
+model_cls = locate(train_options.model_class) or \
+            getattr(models, train_options.model_class)
+model_params = train_options.model_params
+model_params = _deep_merge_dict(model_params, _maybe_load_yaml(model_params))
+# Describe directory structure explicitly
+model_params['vocab_target'] = 'datavis/model/sourcedata/vocab.target'
+model_params['vocab_source'] = 'datavis/model/sourcedata/vocab.source'
+
+model = model_cls(params=model_params, mode=tf.contrib.learn.ModeKeys.INFER)
+
+
+def _handle_attention(attention_scores):
+    print(">>> Saved attention scores")
+
+
+def _save_prediction_to_dict(output_string):
+    global decoded_string
+    decoded_string = output_string
+
+
+# Load inference tasks
+for tdict in fl_tasks:
+    if not "params" in tdict:
+        tdict["params"] = {}
+    task_cls = locate(str(tdict["class"])) or getattr(tasks, str(
+        tdict["class"]))
+    if (str(tdict["class"]) == "DecodeText"):
+        task = task_cls(
+            tdict["params"], callback_func=_save_prediction_to_dict)
+    elif (str(tdict["class"]) == "DumpAttention"):
+        task = task_cls(tdict["params"], callback_func=_handle_attention)
+
+    hooks.append(task)
+
+input_pipeline_infer = input_pipeline.make_input_pipeline_from_def(
+    fl_input_pipeline,
+    mode=tf.contrib.learn.ModeKeys.INFER,
+    shuffle=False,
+    num_epochs=1)
+
+# Create the graph used for inference
+predictions, _, _ = create_inference_graph(
+    model=model, input_pipeline=input_pipeline_infer, batch_size=batch_size)
+
+graph = tf.get_default_graph()
+
+# Function to run inference.
+def run_inference():
+    # tf.reset_default_graph()
+    with graph.as_default():
+        saver = tf.train.Saver()
+        checkpoint_path = loaded_checkpoint_path
+        if not checkpoint_path:
+            checkpoint_path = tf.train.latest_checkpoint(model_directory)
+
+        def session_init_op(_scaffold, sess):
+            saver.restore(sess, checkpoint_path)
+            tf.logging.info("Restored model from %s", checkpoint_path)
+
+        scaffold = tf.train.Scaffold(init_fn=session_init_op)
+        session_creator = tf.train.ChiefSessionCreator(scaffold=scaffold)
+        with tf.train.MonitoredSession(
+                session_creator=session_creator, hooks=hooks) as sess:
+            sess.run([])
+        # XXX Display decoded strings
+        print(" Decoded string: ", decoded_string)
+        return decoded_string
+
+
+# Data2Vis functions
+# ------------------------------------------------------------------------------
 
 @app.route('/')
 def query():
@@ -52,41 +189,9 @@ def test_chart():
     vals = data['data']
     return render_template('test.html',axes=axes,labels=labels,vals=vals,visual='bar')
 
-@app.route("/examplesdata")
-def examplesdata():
-    source_data = data_utils.load_test_dataset()
-    f_names = data_utils.generate_field_types(source_data)
-    data_utils.forward_norm(source_data, destination_file, f_names)
-
-    run_inference()
-
-    # Perform post processing - backward normalization
-    # decoded_post_array = []
-    # for row in decoded_string:
-    #     decoded_post = data_utils.backward_norm(row, f_names)
-    #     decoded_post_array.append(decoded_post)
-
-    decoded_string_post = data_utils.backward_norm(decoded_string[0], f_names)
-
-    try:
-        vega_spec = json.loads(decoded_string_post)
-        vega_spec["data"] = {"values": source_data}
-        response_payload = {"vegaspec": vega_spec, "status": True}
-    except JSONDecodeError as e:
-        response_payload = {
-            "status": False,
-            "reason": "Model did not produce a valid vegalite JSON",
-            "vegaspec": decoded_string
-        }
-    return jsonify(response_payload)
-
-
-
-"""[Load sample json data from new dataset]
-
-Returns:
-    [type] -- [description]
-"""
+@app.route("/data2vis")
+def data2vis():
+    return render_template('index.html')
 
 
 @app.route("/testdata")
@@ -94,27 +199,10 @@ def testdata():
     return jsonify(data_utils.load_test_dataset())
 
 
-@app.route("/testhundred", methods=['POST'])
-def testhundred():
-    input_data = request.json
-    print("input data >>>>>>>>>", input_data)
-    data = data_utils.get_test100_data(input_data["index"])
-    response_payload = {"data": data, "status": True, "model": model_dir_input}
-    return jsonify(response_payload)
-
-
-@app.route("/savetest", methods=['POST'])
-def savetest():
-    input_data = request.json
-    # print("input data >>>>>>>>>", input_data)
-    data = data_utils.save_test_results(input_data)
-    response_payload = {"status": True}
-    return jsonify(response_payload)
-
-
 @app.route("/inference", methods=['POST'])
 def inference():
     input_data = request.json
+    source_data = json.loads(str(input_data["sourcedata"]))
 
     # Catch bad JSONDecodeError
     try:
@@ -127,32 +215,19 @@ def inference():
         return jsonify(response_payload)
 
     if len(source_data) == 0:
-        response_payload = {"status": False, "reason": "Empty JSON!!!!.  "}
+        response_payload = {"status": False, "reason": "Empty JSON.  "}
         return jsonify(response_payload)
 
-    # Perform preprocessing - forward normalization on first data sample
+    # Perform preprocessing - forward normalization
     f_names = data_utils.generate_field_types(source_data)
     fnorm_result = data_utils.forward_norm(source_data, destination_file,
                                            f_names)
 
     if (not fnorm_result):
-        response_payload = {"status": False, "reason": "JSON decode error  "}
+        response_payload = {"status": False, "reason": "JSON decode error.  "}
         return jsonify(response_payload)
 
     run_inference()
-
-    # # Perform post processing - backward normalization
-    # decoded_string_post = data_utils.backward_norm(decoded_string, f_names)
-    # # print("**********",decoded_string_post)
-    # try:
-    #     vega_spec = json.loads(decoded_string_post)
-    #     vega_spec["data"] = { "values": source_data}
-    #     response_payload = {"vegaspec": vega_spec, "status": True}
-    # except JSONDecodeError as e:
-    #     response_payload = {"status": False,
-    #     "reason": "Model did not produce a valid vegalite JSON.",
-    #     "vegaspec": decoded_string}
-    # return jsonify(response_payload)
 
     # Perform post processing - backward normalization
     decoded_post_array = []
@@ -160,12 +235,8 @@ def inference():
         decoded_post = data_utils.backward_norm(row, f_names)
         decoded_post_array.append(decoded_post)
 
-    # decoded_string_post = data_utils.backward_norm(decoded_string, f_names)
-    # print("==========", decoded_string)
-
     try:
         vega_spec = json.dumps(decoded_post_array)
-        # print("===== vega spec =====", vega_spec)
         response_payload = {
             "vegaspec": vega_spec,
             "status": True,
@@ -179,6 +250,9 @@ def inference():
         }
     return jsonify(response_payload)
 
+
+# Search functions
+# ------------------------------------------------------------------------------
 
 def get_key_words(query):
     key_words = []
