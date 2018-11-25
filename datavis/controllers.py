@@ -255,14 +255,17 @@ def test_chart():
     return render_template('test.html',axes=axes,labels=labels,vals=vals,visual='bar')
 
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=["POST"])
 def data_dashboard():
-    # filename = request.form['filename']
-
-
-
-    # return render_template('dashboard.html', filename=filename)
-    return render_template('dashboard.html')
+    filename = request.form['filename']
+    file_to_map = {
+        "familieschild.json": "families_children"
+    }
+    dataset_focus = file_to_map[filename]
+    print(filename, dataset_focus)
+    return render_template("dashboard.html",
+                           filename=filename,
+                           dataset=dataset_focus)
 
 @app.route("/datavis/<string:filename>", methods=['POST'])
 def data2vis(filename):
