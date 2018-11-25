@@ -25,17 +25,13 @@
 <script src="static/js/home.js"></script>
 
 <script>
-    var input = document.getElementById("input_query");
-    input.addEventListener("keyup",function(event){
-        event.preventDefault();
-        if (event.keyCode == 13){
-            document.getElementById("button").click();
-            return false;
-        } else {
-            console.log('rip')
-            return false;
-        }
-    })
+    $('#input_query').keydown(function(e){
+       if(e.keyCode == 13){
+           display_cards();
+           $('#input').css("transform","translate(0,-500%)");
+           return false;
+       }
+    });
 
 </script>
 
@@ -44,13 +40,13 @@
         $('#button').click(function(){
             $('#input').css("transform","translate(0,-500%)");
         });
-        return false;
     });
 </script>
 
+
+
 <script>
     function display_cards() {
-        console.log('nice')
         // do asynch post req to modify cards
         $.post("/choose_dataset", {
             query: $('#input_query').val()
