@@ -49,9 +49,14 @@ datasets = {
         'description': 'Racial groups sorted by location'
     },
     'Income distribution': {
-        'keywords': set(['boston','people', 'map', 'income']),
+        'keywords': set(['boston','people', 'map', 'income', 'where', 'rich', 'poor']),
         'title': 'Income distribution',
-        'description': 'Income distribution'
+        'description': 'Distribution of income by location'
+    },
+    'Higher Education Distribution': {
+        'keywords': set(['boston','people', 'map', 'students', 'college']),
+        'title': 'Higher Education Distribution',
+        'description': 'Higher education campus locations'
     },
 
 
