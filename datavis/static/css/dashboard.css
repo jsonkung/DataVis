@@ -1,0 +1,25 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.tab {
+    height: calc(100% - 45px);
+
+}
+
+#mapframe {
+    height: 100%;
+    width: 100%;
+}

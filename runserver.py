@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from datavis import app
 
 # Constants

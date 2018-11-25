@@ -29,8 +29,13 @@ from flask import (
     request,
     redirect,
     render_template,
-    jsonify
+    jsonify,
+    url_for
 )
+
+import time
+import geomapy
+import sys
 
 datasets = {
     'familieschild.json': {
@@ -193,13 +198,53 @@ def choose_dataset():
     filenames,titles,descriptions = get_matching_datasets(query,datasets)
     return jsonify({'titles':titles,'descriptions':descriptions,'filenames':filenames})
 
-@app.route('/visual',methods=['POST'])
-def visualize():
-    if request.method == 'GET':
-        raise ValueError('Bad request')
-    datasets = request.form['datasets'] # Sent in as list of filenames
-    graph_type = request.form['type']
-    # Based on graph_type, call function to parse data
+DATASET_COLUMNS = {
+    "race_demographics": ["Asian", "Black", "White", "Hispanic", "Percent Asian", "Percent Black", "Percent White", "Percent Hispanic"],
+    "gender_age": ["Seniors", "Males 18-34", "Females 18-34", "Children"],
+    "families_children": ["Single Mothers", "Families with Children"],
+    "income": ["Income per capita"]
+}
+
+# overlays
+bps = geomapy.digest_overlay("bps.geojson", "SCH_NAME", ["CITY"], "#E85D75")
+bnps = geomapy.digest_overlay("bnps.geojson", "NAME", ["TYPE"], "#45CB85")
+colleges = geomapy.digest_overlay("colleges.geojson", "Name", ["Cost"], "#A594F9")
+wifi = geomapy.digest_overlay("wickedwifi.geojson", "AP_Name", ["AP_Name"], "#E4DFDA")
+
+BASE = sys.path[0] + "/datavis/"
+
+OVERLAYS = [
+    ("CITY", "Boston Public Schools", bps),
+    ("TYPE", "Boston Non-Public Schools", bnps),
+    ("Cost", "Boston Area Colleges", colleges),
+    ("AP_Name", "Wicked Free Wifi", wifi)
+]
+
+@app.route('/visualize/<dataset>')
+def visualize(dataset):
+    js, _ = geomapy.digest_dataset(
+        dataset + ".geojson",
+        DATASET_COLUMNS[dataset],
+        overlays=list(map(lambda x: x[2], OVERLAYS))
+    )
+
+    with open(BASE + "static/js/{}.js".format(dataset), "w") as f:
+        f.write(js)
+    
+    columnNames = DATASET_COLUMNS[dataset]
+    columnIds = list(map(lambda x: x.replace(" ", ""), DATASET_COLUMNS[dataset]))
+
+    layers = list(zip(columnIds, columnNames))
+
+    return render_template(
+        "map.html",
+        datasets=DATASET_COLUMNS.keys(),
+        dataset=dataset,
+        layers=layers,
+        overlays=OVERLAYS,
+        allLayers=str(list(map(lambda x: x[0], layers)))
+    )
+
 
 @app.route('/test_chart')
 def test_chart():
@@ -208,6 +253,16 @@ def test_chart():
     labels = data['labels']
     vals = data['data']
     return render_template('test.html',axes=axes,labels=labels,vals=vals,visual='bar')
+
+
+@app.route('/dashboard')
+def data_dashboard():
+    # filename = request.form['filename']
+
+
+
+    # return render_template('dashboard.html', filename=filename)
+    return render_template('dashboard.html')
 
 @app.route("/datavis/<string:filename>", methods=['POST'])
 def data2vis(filename):

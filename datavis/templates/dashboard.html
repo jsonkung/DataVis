@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Data Dashboard</title>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+  <link rel="stylesheet" href="static/css/dashboard.css">
+  <script src="static/js/dashboard.js"></script>
+</head>
+
+<body>
+
+  <div class="ui top attached tabular menu">
+    <a class="item active" data-tab="charts">Charts</a>
+    <a class="item" data-tab="maps">Maps</a>
+    <a class="item" data-tab="trends">Trends</a>
+  </div>
+
+  <div class="ui bottom attached active tab segment" data-tab="charts">
+    <p>one</p>
+    <p></p>
+  </div>
+
+  <div class="ui bottom attached tab segment" data-tab="maps">
+    <iframe src="{{ url_for('visualize', dataset='income') }}" frameborder="0" id="mapframe"></iframe>
+  </div>
+
+  <div class="ui bottom attached tab segment" data-tab="trends">
+    <p>three</p>
+    <p></p>
+  </div>
+
+</body>
+
+</html>
