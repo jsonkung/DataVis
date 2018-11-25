@@ -26,11 +26,11 @@
   </div>
 
   <form action="/chart" method="post" target="chartjs" id="post2chartjs">
-    <input type="hidden" name="filename" value="{{ filename }}" />
+    <input type="hidden" name="filename" value="{{ chartjsfile }}" />
   </form>
 
   <div class="ui bottom attached tab segment" data-tab="maps">
-    <iframe src="{{ url_for('visualize', dataset=dataset) }}" frameborder="0" id="mapframe"></iframe>
+    <iframe src="{{ url_for('visualize', dataset=mapfile) }}" frameborder="0" id="mapframe"></iframe>
   </div>
 
   <div class="ui bottom attached tab segment" data-tab="trends">
@@ -38,7 +38,7 @@
   </div>
 
   <form action="/datavis" method="post" target="data2viz" id="post2data2viz">
-      <input type="hidden" name="filename" value="{{ filename }}" />
+      <input type="hidden" name="filename" value="{{ d2visfile }}" />
   </form>
 
 </body>
