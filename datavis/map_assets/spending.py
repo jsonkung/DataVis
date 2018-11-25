@@ -8,8 +8,8 @@ newdat = {'labels': [], 'datasets': []}
 for row in reader:
     print(row)
     newdat['labels'].append(row[0])
-    newdat['datasets'].append({'label':"percent", 
-    'data': [row[1], row[2]]})
+    newdat['datasets'].append(['label',"percent", 
+    'data', [row[1], row[2]]])
 with open('spending.json', 'w') as outfile:
     json.dump(newdat, outfile)
 # var chartData = {
