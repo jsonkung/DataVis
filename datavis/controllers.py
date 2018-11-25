@@ -202,7 +202,8 @@ def get_key_words(query):
     return key_words
 
 def get_matching_datasets(query,datasets):
-    used_files = set()
+    matches = {}
+    current_match = 0
     filenames = []
     titles = []
     descriptions = []
@@ -210,8 +211,13 @@ def get_matching_datasets(query,datasets):
     for keyword in keywords:
         for dataset in datasets:
             if keyword in datasets[dataset]['keywords']:
-                if dataset not in used_files:
-                    used_files.add(dataset)
+                matches[dataset] = matches.get(dataset,0)+1
+                if matches[dataset] > current_match:
+                    filenames = [dataset]
+                    titles = [datasets[dataset]['title']]
+                    descriptions = [datasets[dataset]['description']]
+                    current_match = matches[dataset]
+                elif matches[dataset] == current_match:
                     filenames.append(dataset)
                     titles.append(datasets[dataset]['title'])
                     descriptions.append(datasets[dataset]['description'])

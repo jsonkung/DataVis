@@ -71,7 +71,12 @@ a:focus {
 	font-family: 'Open Sans', sans-serif;
 }
 
-
+.logo {
+    position: fixed;
+    margin-left: 42.5%;
+    margin-right: 57.5%;
+    top: 20%;
+}
 
 
 @keyframes slide-up {
