@@ -230,7 +230,7 @@ def visualize(dataset):
 
     with open(BASE + "static/js/{}.js".format(dataset), "w") as f:
         f.write(js)
-    
+
     columnNames = DATASET_COLUMNS[dataset]
     columnIds = list(map(lambda x: x.replace(" ", ""), DATASET_COLUMNS[dataset]))
 
@@ -267,11 +267,13 @@ def data_dashboard():
                            filename=filename,
                            dataset=dataset_focus)
 
-@app.route("/datavis/<string:filename>", methods=['POST'])
-def data2vis(filename):
-    directory = 'datavis/data'
+# @app.route("/datavis/<string:filename>", methods=['GET'])
+@app.route("/datavis", methods=['POST'])
+def data2vis():
+    filename = request.form['filename']
+    directory = 'datavis/data/'
     global data
-    with open(directory + filename) as f:
+    with open(directory + filename + '.json') as f:
         data = json.load(f)
     print(data)
     return render_template('index.html')
