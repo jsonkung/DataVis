@@ -4,6 +4,7 @@ $link: #e34234;
 $link-hover: #ba160c;
 $background: #FFFFFF;
 
+
 canvas {
   display: block;
   vertical-align: bottom;
@@ -54,8 +55,16 @@ a:focus {
 
 #cards {
 	position: absolute;
-    top: 40%;
+	/*original style:
+    top: 50%;
+    */
+
+    /* new style */
 	right: 50%;
+	bottom: -20%;
+	height: 62%;
+	/* new style */
+
 	transform: translate(50%,-50%);
 	color: $text;
 	max-width: 90%;
