@@ -1,68 +1,41 @@
 <!DOCTYPE html>
 <html>
-<title>Data Dashboard</title>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.css"></link>
-<link rel="stylesheet" href="static/css/dashboard.css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<head>
+  <title>Data Dashboard</title>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+  <link rel="stylesheet" href="static/css/dashboard.css">
+  <script src="static/js/dashboard.js"></script>
+</head>
+
 <body>
 
-<div class="ui top attached tabular menu">
-  <a class="item active">
-    Charts
-  </a>
-  <a class="item" >
-    Map
-  </a>
-  <a class="item">
-    Trends
-  </a>
-  <div class="right menu">
-    <div class="item">
-      <button class="ui button back-button" onclick="location.href='/'">
-        <a class="button-text" style="opacity: 0.7;">back to menu<a/><i class="level up alternate icon" style="opacity: 0.7;"></i>
-      </button>
-    </div>
+  <div class="ui top attached tabular menu">
+    <a class="item active" data-tab="charts">Charts</a>
+    <a class="item" data-tab="maps">Maps</a>
+    <a class="item" data-tab="trends">Trends</a>
   </div>
-</div>
-<div class="ui bottom attached segment">
-  <p></p>
-</div>
 
-<!-- 
-<div class="w3-container">
-</div>
+  <div class="ui bottom attached active tab segment" data-tab="charts">
+    <p>one</p>
+    <p></p>
+  </div>
 
-<div class="w3-bar w3-black">
-  <button class="w3-bar-item w3-button" onclick="openCity('London')">Charts</button>
-  <button class="w3-bar-item w3-button" onclick="openCity('Paris')">Map</button>
-  <button class="w3-bar-item w3-button" onclick="openCity('Tokyo')">Trends</button>
-</div>
+  <div class="ui bottom attached tab segment" data-tab="maps">
+    <p>two</p>
+    <p></p>
+  </div>
 
-<div id="London" class="w3-container city">
-  <h2>London</h2>
-  <p>London is the capital city of England.</p>
-</div>
-
-<div id="Paris" class="w3-container city" style="display:none">
-  <h2>Paris</h2>
-  <p>Paris is the capital of France.</p> 
-</div>
-
-<div id="Tokyo" class="w3-container city" style="display:none">
-  <h2>Tokyo</h2>
-  <p>Tokyo is the capital of Japan.</p>
-</div>
-
-<script>
-function openCity(cityName) {
-    var i;
-    var x = document.getElementsByClassName("city");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(cityName).style.display = "block";  
-}
-</script> -->
+  <div class="ui bottom attached tab segment" data-tab="trends">
+    <p>three</p>
+    <p></p>
+  </div>
 
 </body>
+
 </html>

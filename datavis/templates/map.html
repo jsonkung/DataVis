@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <title></title>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
+</head>
+
+<body class="fluid-container">
+
+  <div class="row">
+      <div class="col-9">
+        <div class="map-wrapper">
+            <div id='map'></div>
+        </div>
+
+      </div>
+
+    <script src="{{ url_for('static', filename='mapjs/map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/' + dataset + '.js') }}"></script>
+
+      <div class="col-3 button-col">
+        {% for layer in layers %}
+        <script>allLayers.push("{{ layer[0] }}")</script>
+        <button id="{{ layer[0] }}""
+                onclick="focusLayer('{{ layer[0] }}')">
+            {{ layer[1] }}
+        </button>
+        {% endfor %}
+
+        <hr>
+
+        {% for overlay in overlays %}
+        <button id="{{ overlay[0] }}"
+                onclick="toggleOverlay('{{ overlay[0] }}')">
+            {{ overlay[1] }}
+        </button>
+        {% endfor %}
+
+      </div>
+  </div>
+
+  <div id="selector-wrapper" class="form-group">
+    <select class="form-control" id="dataset-selector" onchange="changeDataset(this.value)">
+      {% for ds in datasets %}
+      {% if ds == dataset %}
+      <option value="{{ url_for('visualize', dataset=ds) }}" selected="selected">
+          {{ ds }}
+      </option>
+      {% else %}
+      <option value="{{ url_for('visualize', dataset=ds) }}">
+          {{ ds }}
+      </option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+
+</body>
+
+</html>

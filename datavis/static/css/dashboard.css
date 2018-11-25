@@ -1,20 +1,20 @@
-.back-button{
-	background-color: rgba(168,168,168, 0) !important;	
+html {
+    box-sizing: border-box;
 }
 
-.back-button:hover{
-	background-color: rgba(168,168,168, 0.3) !important;
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
 }
 
-.button-text{
-	font-size: 1rem !important;
+body {
+    padding: 10px;
+    height: 100%;
+    width: 100%;
 }
 
-.item{
-	padding-right: 200px !important;
-	font-size: 20px !important;
-	padding-top: 7px !important;
-	padding-bottom: 7px !important;
-	/*width:20% !important;*/
-	/*height:2% !important;*/
+.tab {
+    height: calc(100% - 45px);
+
 }
