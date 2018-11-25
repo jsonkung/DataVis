@@ -13,16 +13,29 @@ from flask import (
 )
 
 datasets = {
-    'data1': {
-        'keywords': set(['boston','people']),
-        'title': 'data1',
-        'description': 'description1'
+    'Family Data': {
+        'keywords': set(['boston','people', 'children', 'family', 'mothers', 'map']),
+        'title': 'Families with Children',
+        'description': 'Maps location of different types of families with children'
     },
-    'data2': {
-        'keywords': set(['new','york','people']),
-        'title': 'data2',
-        'description': 'description'
-    }
+    'Population by Age': {
+        'keywords': set(['boston','people', 'map', 'age']),
+        'title': 'Population by Age',
+        'description': 'Market segments sorted by location'
+    },
+    'Population by Race': {
+        'keywords': set(['boston','people', 'map', 'race']),
+        'title': 'Population by Race',
+        'description': 'Racial groups sorted by location'
+    },
+    'Income distribution': {
+        'keywords': set(['boston','people', 'map', 'income']),
+        'title': 'Income distribution',
+        'description': 'Income distribution'
+    },
+
+
+
 
 }
 
