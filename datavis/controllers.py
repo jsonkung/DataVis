@@ -69,7 +69,7 @@ datasets = {
         'description': 'Free wifi networks around Boston'
     },
     'colleges.geojson': {
-        'keywords': set(['boston','people', 'map', 'students', 'college', 'university'),
+        'keywords': set(['boston','people', 'map', 'students', 'college', 'university']),
         'title': 'Higher Education Distribution',
         'description': 'Higher education campus locations'
     },
