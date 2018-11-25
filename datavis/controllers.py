@@ -73,10 +73,15 @@ datasets = {
         'title': 'Higher Education Distribution',
         'description': 'Higher education campus locations'
     },
-        'employment.csv': {
+    'employment.csv': {
         'keywords': set(['boston','people', 'jobs', 'income']),
         'title': 'Employment by profession',
         'description': 'Number of people employed by profession'
+    },
+    'bos_percents.csv': {
+        'keywords': set(['boston','people', 'spending', 'income']),
+        'title': 'Percent spent on items',
+        'description': 'Amount spent by Bostonians on different services'
     },
 }
 
@@ -292,7 +297,8 @@ def data_dashboard():
 # @app.route("/datavis/<string:filename>", methods=['GET'])
 @app.route("/datavis", methods=['POST'])
 def data2vis():
-    filename = request.form['filename']
+    filename = 'joined_census.json'
+    # filename = request.form['filename']
     directory = 'datavis/data/'
     global data
     with open(directory + filename) as f:
@@ -302,8 +308,8 @@ def data2vis():
 
 @app.route("/testdata")
 def testdata():
-    # return jsonify(data)
-    return jsonify(data_utils.load_test_dataset())
+    return jsonify(data)
+    # return jsonify(data_utils.load_test_dataset())
 
 @app.route("/inference", methods=['POST'])
 def inference():
