@@ -273,7 +273,7 @@ def data2vis():
     filename = request.form['filename']
     directory = 'datavis/data/'
     global data
-    with open(directory + filename + '.json') as f:
+    with open(directory + filename) as f:
         data = json.load(f)
     print(data)
     return render_template('index.html')
