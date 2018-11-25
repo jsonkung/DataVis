@@ -11,8 +11,8 @@ stats = {}
 next(reader)
 heading = next(reader)
 for row in reader:
-    stats[row[2].split(',')[0].split()[-1]] = {'Income per capita':row[3],}
-print(stats)
+    stats[float(row[2].split(',')[0].split()[-1])] = {'Income per capita':row[3],}
+# print(stats)
 # print(heading)
 
 j = open(j1)
@@ -21,8 +21,8 @@ newdata = {"type":"FeatureCollection",
     "features": []}
 
 for feature in data['features']:
-    if feature['properties']['NAME'] in stats:
-        feature['properties'].update( stats[feature['properties']['NAME']])
+    if float(feature['properties']['NAME']) in stats:
+        feature['properties'].update( stats[float(feature['properties']['NAME'])])
         newdata['features'].append({'type': 'Feature', 'properties':feature['properties'], 'geometry': feature['geometry']})
 with open(new, 'w') as outfile:
     json.dump(newdata, outfile)
