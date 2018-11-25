@@ -87,38 +87,38 @@ datasets = {
     },
     'joined_census_fam_nochil.json': {
         'keywords': set(['boston','people', 'insights', 'family', 'children']),
-        'title': 'Insights:',
-        'description': 'Discover connections between'
+        'title': 'Insights: family-children connections',
+        'description': 'Discover connections between demographic information'
     },
     'joined_census_fam_race.json': {
         'keywords': set(['boston','people', 'insights', 'family', 'race', 'minority']),
-        'title': 'Insights:',
-        'description': 'Discover connections between'
+        'title': 'Insights: family-race connections',
+        'description': 'Discover connections between demographic information'
     },
     'joined_census_gender_fam.json': {
         'keywords': set(['boston','people', 'insights', 'gender', 'family', 'children']),
-        'title': 'Insights:',
-        'description': 'Discover connections between'
+        'title': 'Insights: family-gender connections',
+        'description': 'Discover connections between demographic information'
     },
     'joined_census_gender_nochil.json': {
         'keywords': set(['boston','people', 'insights', 'gender', 'family', 'children']),
-        'title': 'Insights:',
-        'description': 'Discover connections between'
+        'title': 'Insights: gender-children connections',
+        'description': 'Discover connections between demographic information'
     },
     'joined_census_gender_race.json': {
         'keywords': set(['boston','people', 'insights', 'race', 'gender']),
-        'title': 'Insights:',
-        'description': 'Discover connections between'
+        'title': 'Insights: gender-race connections',
+        'description': 'Discover connections between demographic information'
     },
     'joined_census_race_nochil.json': {
         'keywords': set(['boston','people', 'insights', 'race', 'family']),
-        'title': 'Insights:',
-        'description': 'Discover connections between'
+        'title': 'Insights: race-family connections',
+        'description': 'Discover connections between demographic information'
     },
     'joined_census.json': {
         'keywords': set(['boston','people', 'insights', 'race', 'gender', 'minority']),
-        'title': 'Insights:',
-        'description': 'Discover connections between'
+        'title': 'Insights: census connections',
+        'description': 'Discover connections between demographic information'
     },
 }
 
