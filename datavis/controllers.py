@@ -73,6 +73,11 @@ datasets = {
         'title': 'Higher Education Distribution',
         'description': 'Higher education campus locations'
     },
+        'employment.csv': {
+        'keywords': set(['boston','people', 'jobs', 'income']),
+        'title': 'Employment by profession',
+        'description': 'Number of people employed by profession'
+    },
 }
 
 # Data2Viz Constants
