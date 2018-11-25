@@ -21,7 +21,7 @@ def open_file(filename,header='infer'):
         path = 'datavis/data/{}'.format(filename)
         return pd.read_csv(path,header=header)
     except FileNotFoundError:
-        raise NameError('file not found in data folder')
+        raise NameError('file `{}` not found in data folder'.format(filename))
 
 
 def get_single_bar_data(filename,method=stat.mean,header='infer'):

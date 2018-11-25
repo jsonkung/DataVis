@@ -68,7 +68,6 @@ datasets = {
         'title': 'Boston Spending Habits',
         'description': 'Spending trends in Boston vs. the US as a whole'
     },
-
 }
 
 # Data2Viz Constants
@@ -246,7 +245,7 @@ def visualize(dataset):
     )
 
 
-@app.route('/chart',methods=["POST"])
+@app.route('/chart', methods=["POST"])
 def test_chart():
     filename = request.form['filename']
     if filename == 'spending.json':
@@ -264,7 +263,7 @@ def data_dashboard():
     file_to_map = {
         "familieschild.json": "families_children"
     }
-    dataset_focus = file_to_map[filename]
+    dataset_focus = file_to_map.get(filename, "families_children")
     print(filename, dataset_focus)
     return render_template("dashboard.html",
                            filename=filename,
